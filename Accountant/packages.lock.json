@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net6.0-windows7.0": {
+      "DalamudPackager": {
+        "type": "Direct",
+        "requested": "[2.1.11, )",
+        "resolved": "2.1.11",
+        "contentHash": "9qlAWoRRTiL/geAvuwR/g6Bcbrd/bJJgVnB/RurBiyKs6srsP0bvpoo8IK+Eg8EA6jWeM6/YJWs66w4FIAzqPw=="
+      },
+      "accountant.gamedata": {
+        "type": "Project",
+        "dependencies": {
+          "OtterLoc": "[1.0.0, )"
+        }
+      },
+      "addonwatcher": {
+        "type": "Project"
+      },
+      "otterloc": {
+        "type": "Project"
+      }
+    }
+  }
+}
