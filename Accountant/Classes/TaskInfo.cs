@@ -9,7 +9,6 @@ public class TaskInfo
     public DateTime     Map          = DateTime.MinValue;
     public MiniCactpot  MiniCactpot  = new();
     public JumboCactpot JumboCactpot = new();
-    // 6.3
-    //public Delivery     Delivery     = new();
-    //public Tribe        Tribe        = new();
+    public Delivery     Delivery     = new();
+    public Tribe        Tribe        = new();
 }

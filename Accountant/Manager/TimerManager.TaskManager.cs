@@ -28,9 +28,8 @@ public partial class TimerManager
                 new MapManager(tasks),
                 new MiniCactpotManager(tasks, _goldSaucerUpdate),
                 new JumboCactpotManager(tasks, _goldSaucerUpdate),
-                // 6.3
-                //new TribeManager(tasks),
-                //new DeliveryManager(tasks),
+                new TribeManager(tasks),
+                new DeliveryManager(tasks),
             };
 
             SetState();

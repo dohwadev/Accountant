@@ -27,8 +27,7 @@ public class Plots
     }
 
     internal int GetNumWards(InternalHousingZone _)
-        => 24;
-        //=> 30; // 6.3
+        => 30;
 
     internal int GetNumPlots(InternalHousingZone zone)
     {

@@ -29,7 +29,6 @@ internal class FreeCompanyTracker
 
         if (*(byte*)ptr != 0)
             return MemoryHelper.ReadSeStringNullTerminated(ptr);
-
         if (*(ulong*)_fcStatePtr != 0)
             return null;
 
@@ -98,7 +97,7 @@ internal class FreeCompanyTracker
         if (fcData != IntPtr.Zero)
         {
             _fcStatePtr  = fcData + 0x48;
-            _fcNamePtr   = fcData - 0x7C;
+            _fcNamePtr   = fcData + 0x7C;
             _fcLeaderPtr = fcData + 0x93;
         }
 

@@ -75,58 +75,57 @@ public sealed class TaskTimers : TimersBase<PlayerInfo, TaskInfo>
         return true;
     }
 
-    // 6.3
-    //public bool AddOrUpdateTribes(PlayerInfo player, int allowances)
-    //{
-    //    var newTribe = new Tribe
-    //    {
-    //        Allowances = allowances,
-    //        LastUpdate = DateTime.UtcNow,
-    //    };
-    //    if (!InternalData.TryGetValue(player, out var tasks))
-    //    {
-    //        InternalData[player] = new TaskInfo
-    //        {
-    //            Tribe = newTribe,
-    //        };
-    //        Invoke();
-    //        return true;
-    //    }
+    public bool AddOrUpdateTribes(PlayerInfo player, int allowances)
+    {
+        var newTribe = new Tribe
+        {
+            Allowances = allowances,
+            LastUpdate = DateTime.UtcNow,
+        };
+        if (!InternalData.TryGetValue(player, out var tasks))
+        {
+            InternalData[player] = new TaskInfo
+            {
+                Tribe = newTribe,
+            };
+            Invoke();
+            return true;
+        }
 
-    //    var oldTribe = tasks.Tribe;
-    //    if (oldTribe.Allowances == allowances)
-    //        return false;
+        var oldTribe = tasks.Tribe;
+        if (oldTribe.Allowances == allowances)
+            return false;
 
-    //    tasks.Tribe = newTribe;
-    //    Invoke();
-    //    return true;
-    //}
+        tasks.Tribe = newTribe;
+        Invoke();
+        return true;
+    }
 
-    //public bool AddOrUpdateDeliveries(PlayerInfo player, int allowances)
-    //{
-    //    var newDelivery = new Delivery
-    //    {
-    //        Allowances = allowances,
-    //        LastUpdate = DateTime.UtcNow,
-    //    };
-    //    if (!InternalData.TryGetValue(player, out var tasks))
-    //    {
-    //        InternalData[player] = new TaskInfo
-    //        {
-    //            Delivery = newDelivery,
-    //        };
-    //        Invoke();
-    //        return true;
-    //    }
+    public bool AddOrUpdateDeliveries(PlayerInfo player, int allowances)
+    {
+        var newDelivery = new Delivery
+        {
+            Allowances = allowances,
+            LastUpdate = DateTime.UtcNow,
+        };
+        if (!InternalData.TryGetValue(player, out var tasks))
+        {
+            InternalData[player] = new TaskInfo
+            {
+                Delivery = newDelivery,
+            };
+            Invoke();
+            return true;
+        }
 
-    //    var oldDelivery = tasks.Delivery;
-    //    if (oldDelivery.Allowances == allowances)
-    //        return false;
+        var oldDelivery = tasks.Delivery;
+        if (oldDelivery.Allowances == allowances)
+            return false;
 
-    //    tasks.Delivery = newDelivery;
-    //    Invoke();
-    //    return true;
-    //}
+        tasks.Delivery = newDelivery;
+        Invoke();
+        return true;
+    }
 
     public bool AddOrUpdateSquadron(PlayerInfo player, Squadron squadron)
     {

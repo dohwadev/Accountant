@@ -203,45 +203,44 @@ public partial class TimerWindow
             return ret;
         }
 
-        // 6.3
-        //private CacheObject DeliveryObject(string player, Delivery delivery)
-        //{
-        //    var nextReset = Delivery.NextReset(DateTime.UtcNow);
-        //    var ret = new CacheObject
-        //    {
-        //        Name        = player,
-        //        Icon        = Window._icons[Icons.CustomDeliveryIcon],
-        //        DisplayTime = UpdateNextChange(nextReset),
-        //    };
-        //    var allowances = delivery.CurrentAllowances(DateTime.UtcNow);
-        //    (ret.DisplayString, ret.Color) = allowances switch
-        //    {
-        //        0                     => ($"0/{Delivery.AllowanceCap}", ColorId.TextObjectsAway),
-        //        Delivery.AllowanceCap => ($"{Delivery.AllowanceCap}/{Delivery.AllowanceCap}", ColorId.TextObjectsHome),
-        //        _                     => ($"{allowances}/{Delivery.AllowanceCap}", ColorId.TextObjectsMixed),
-        //    };
-        //    return ret;
-        //}
+        private CacheObject DeliveryObject(string player, Delivery delivery)
+        {
+            var nextReset = Delivery.NextReset(DateTime.UtcNow);
+            var ret = new CacheObject
+            {
+                Name        = player,
+                Icon        = Window._icons[Icons.CustomDeliveryIcon],
+                DisplayTime = UpdateNextChange(nextReset),
+            };
+            var allowances = delivery.CurrentAllowances(DateTime.UtcNow);
+            (ret.DisplayString, ret.Color) = allowances switch
+            {
+                0                     => ($"0/{Delivery.AllowanceCap}", ColorId.TextObjectsAway),
+                Delivery.AllowanceCap => ($"{Delivery.AllowanceCap}/{Delivery.AllowanceCap}", ColorId.TextObjectsHome),
+                _                     => ($"{allowances}/{Delivery.AllowanceCap}", ColorId.TextObjectsMixed),
+            };
+            return ret;
+        }
 
-        //private CacheObject TribeObject(string player, Tribe tribe)
-        //{
-        //    var nextReset = Tribe.NextReset(DateTime.UtcNow);
-        //    var ret = new CacheObject
-        //    {
-        //        Name        = player,
-        //        Icon        = Window._icons[Icons.TribeIcon],
-        //        DisplayTime = UpdateNextChange(nextReset),
-        //    };
-        //    var allowances = tribe.CurrentAllowances(DateTime.UtcNow);
-        //    (ret.DisplayString, ret.Color) = allowances switch
-        //    {
-        //        0 => ($"0/{Tribe.AllowanceCap}", ColorId.TextObjectsAway),
-        //        Tribe.AllowanceCap => ($"{Tribe.AllowanceCap}/{Tribe.AllowanceCap}", ColorId.TextObjectsHome),
-        //        _ when allowances <= Accountant.Config.TribesFinished => ($"{allowances}/{Tribe.AllowanceCap}", ColorId.TextObjectsAway),
-        //        _ => ($"{allowances}/{Tribe.AllowanceCap}", ColorId.TextObjectsMixed),
-        //    };
-        //    return ret;
-        //}
+        private CacheObject TribeObject(string player, Tribe tribe)
+        {
+            var nextReset = Tribe.NextReset(DateTime.UtcNow);
+            var ret = new CacheObject
+            {
+                Name        = player,
+                Icon        = Window._icons[Icons.TribeIcon],
+                DisplayTime = UpdateNextChange(nextReset),
+            };
+            var allowances = tribe.CurrentAllowances(DateTime.UtcNow);
+            (ret.DisplayString, ret.Color) = allowances switch
+            {
+                0 => ($"0/{Tribe.AllowanceCap}", ColorId.TextObjectsAway),
+                Tribe.AllowanceCap => ($"{Tribe.AllowanceCap}/{Tribe.AllowanceCap}", ColorId.TextObjectsHome),
+                _ when allowances <= Accountant.Config.TribesFinished => ($"{allowances}/{Tribe.AllowanceCap}", ColorId.TextObjectsAway),
+                _ => ($"{allowances}/{Tribe.AllowanceCap}", ColorId.TextObjectsMixed),
+            };
+            return ret;
+        }
 
         private SmallHeader Leves(IReadOnlyCollection<(string, ushort, TaskInfo)> data)
         {
@@ -373,58 +372,57 @@ public partial class TimerWindow
             return ret;
         }
 
-        // 6.3
-        //private SmallHeader Deliveries(IReadOnlyCollection<(string, ushort, TaskInfo)> data)
-        //{
-        //    var ret = new SmallHeader
-        //    {
-        //        Name         = "Custom Deliveries",
-        //        ObjectsBegin = Objects.Count,
-        //        ObjectsCount = data.Count,
-        //        DisplayTime  = DateTime.MaxValue,
-        //        Color        = data.Count > 0 ? ColorId.NeutralText : ColorId.TextObjectsHome,
-        //    };
-        //    foreach (var (name, serverId, task) in data)
-        //    {
-        //        Objects.Add(DeliveryObject(name, task.Delivery));
-        //        if (Objects.Last().DisplayTime > Now && Objects.Last().DisplayTime < ret.DisplayTime)
-        //            ret.DisplayTime = Objects.Last().DisplayTime;
-        //        ret.Color = Objects.Last().Color switch
-        //        {
-        //            ColorId.TextObjectsAway => ret.Color is ColorId.TextObjectsAway or ColorId.NeutralText ? ColorId.TextObjectsAway : ColorId.TextObjectsMixed,
-        //            ColorId.TextObjectsHome => ret.Color is ColorId.TextObjectsHome or ColorId.NeutralText ? ColorId.TextObjectsHome : ColorId.TextObjectsMixed,
-        //            _                       => ColorId.TextObjectsMixed,
-        //        };
-        //    }
+        private SmallHeader Deliveries(IReadOnlyCollection<(string, ushort, TaskInfo)> data)
+        {
+            var ret = new SmallHeader
+            {
+                Name         = "Custom Deliveries",
+                ObjectsBegin = Objects.Count,
+                ObjectsCount = data.Count,
+                DisplayTime  = DateTime.MaxValue,
+                Color        = data.Count > 0 ? ColorId.NeutralText : ColorId.TextObjectsHome,
+            };
+            foreach (var (name, serverId, task) in data)
+            {
+                Objects.Add(DeliveryObject(name, task.Delivery));
+                if (Objects.Last().DisplayTime > Now && Objects.Last().DisplayTime < ret.DisplayTime)
+                    ret.DisplayTime = Objects.Last().DisplayTime;
+                ret.Color = Objects.Last().Color switch
+                {
+                    ColorId.TextObjectsAway => ret.Color is ColorId.TextObjectsAway or ColorId.NeutralText ? ColorId.TextObjectsAway : ColorId.TextObjectsMixed,
+                    ColorId.TextObjectsHome => ret.Color is ColorId.TextObjectsHome or ColorId.NeutralText ? ColorId.TextObjectsHome : ColorId.TextObjectsMixed,
+                    _                       => ColorId.TextObjectsMixed,
+                };
+            }
 
-        //    return ret;
-        //}
+            return ret;
+        }
 
-        //private SmallHeader Tribes(IReadOnlyCollection<(string, ushort, TaskInfo)> data)
-        //{
-        //    var ret = new SmallHeader
-        //    {
-        //        Name         = "Tribal Quests",
-        //        ObjectsBegin = Objects.Count,
-        //        ObjectsCount = data.Count,
-        //        DisplayTime  = DateTime.MaxValue,
-        //        Color        = data.Count > 0 ? ColorId.NeutralText : ColorId.TextObjectsHome,
-        //    };
-        //    foreach (var (name, serverId, task) in data)
-        //    {
-        //        Objects.Add(TribeObject(name, task.Tribe));
-        //        if (Objects.Last().DisplayTime > Now && Objects.Last().DisplayTime < ret.DisplayTime)
-        //            ret.DisplayTime = Objects.Last().DisplayTime;
-        //        ret.Color = Objects.Last().Color switch
-        //        {
-        //            ColorId.TextObjectsAway => ret.Color is ColorId.TextObjectsAway or ColorId.NeutralText ? ColorId.TextObjectsAway : ColorId.TextObjectsMixed,
-        //            ColorId.TextObjectsHome => ret.Color is ColorId.TextObjectsHome or ColorId.NeutralText ? ColorId.TextObjectsHome : ColorId.TextObjectsMixed,
-        //            _                       => ColorId.TextObjectsMixed,
-        //        };
-        //    }
+        private SmallHeader Tribes(IReadOnlyCollection<(string, ushort, TaskInfo)> data)
+        {
+            var ret = new SmallHeader
+            {
+                Name         = "Tribal Quests",
+                ObjectsBegin = Objects.Count,
+                ObjectsCount = data.Count,
+                DisplayTime  = DateTime.MaxValue,
+                Color        = data.Count > 0 ? ColorId.NeutralText : ColorId.TextObjectsHome,
+            };
+            foreach (var (name, serverId, task) in data)
+            {
+                Objects.Add(TribeObject(name, task.Tribe));
+                if (Objects.Last().DisplayTime > Now && Objects.Last().DisplayTime < ret.DisplayTime)
+                    ret.DisplayTime = Objects.Last().DisplayTime;
+                ret.Color = Objects.Last().Color switch
+                {
+                    ColorId.TextObjectsAway => ret.Color is ColorId.TextObjectsAway or ColorId.NeutralText ? ColorId.TextObjectsAway : ColorId.TextObjectsMixed,
+                    ColorId.TextObjectsHome => ret.Color is ColorId.TextObjectsHome or ColorId.NeutralText ? ColorId.TextObjectsHome : ColorId.TextObjectsMixed,
+                    _                       => ColorId.TextObjectsMixed,
+                };
+            }
 
-        //    return ret;
-        //}
+            return ret;
+        }
 
         protected override void UpdateInternal()
         {
@@ -433,10 +431,9 @@ public partial class TimerWindow
                   | ConfigFlags.Squadron
                   | ConfigFlags.MapAllowance
                   | ConfigFlags.MiniCactpot
-                  | ConfigFlags.JumboCactpot))
-                // 6.3
-                  //| ConfigFlags.CustomDelivery
-                  //| ConfigFlags.Tribes))
+                  | ConfigFlags.JumboCactpot
+                  | ConfigFlags.CustomDelivery
+                  | ConfigFlags.Tribes))
                 return;
 
             var data = _tasks.Data
@@ -458,11 +455,10 @@ public partial class TimerWindow
                 Headers.Add(JumboCactpot(data));
             }
 
-            // 6.3
-            //if (Accountant.Config.Flags.Check(ConfigFlags.CustomDelivery))
-            //    Headers.Add(Deliveries(data));
-            //if (Accountant.Config.Flags.Check(ConfigFlags.Tribes))
-            //    Headers.Add(Tribes(data));
+            if (Accountant.Config.Flags.Check(ConfigFlags.CustomDelivery))
+                Headers.Add(Deliveries(data));
+            if (Accountant.Config.Flags.Check(ConfigFlags.Tribes))
+                Headers.Add(Tribes(data));
 
             foreach (var header in Headers)
                 Color = Color.Combine(header.Color.TextToHeader());

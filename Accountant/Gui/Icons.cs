@@ -10,9 +10,8 @@ public static class Icons
     public const int MapIcon            = 62938;
     public const int JumboCactpotIcon   = 60848;
     public const int MiniCactpotIcon    = 65025;
-    // 6.3
-    //public const int CustomDeliveryIcon = 60927;
-    //public const int TribeIcon          = 61917;
+    public const int CustomDeliveryIcon = 60927;
+    public const int TribeIcon          = 61917;
 
     public static readonly int[] JobIcons =
     {

@@ -47,10 +47,9 @@ public partial class ConfigWindow
         ImGuiRaii.ConfigCheckmark("Enable Map Allowance Timers",             Accountant.Config.EnableMapAllowance, EnableMapAllowance);
         ImGuiRaii.ConfigCheckmark("Enable Mini Cactpot Timers",              Accountant.Config.EnableMiniCactpot,  EnableMiniCactpot);
         ImGuiRaii.ConfigCheckmark("Enable Jumbo Cactpot Timers",             Accountant.Config.EnableJumboCactpot, EnableJumboCactpot);
-        // 6.3
-        //ImGuiRaii.ConfigCheckmark("Enable Custom Delivery Allowance Timers", Accountant.Config.EnableDeliveries,   EnableDeliveries);
-        //ImGuiRaii.ConfigCheckmark("Enable Tribe Allowance Timers",           Accountant.Config.EnableTribes,       EnableTribes);
-        //DrawTribeAllowancesFinishedInput();
+        ImGuiRaii.ConfigCheckmark("Enable Custom Delivery Allowance Timers", Accountant.Config.EnableDeliveries,   EnableDeliveries);
+        ImGuiRaii.ConfigCheckmark("Enable Tribe Allowance Timers",           Accountant.Config.EnableTribes,       EnableTribes);
+        DrawTribeAllowancesFinishedInput();
         ImGui.NewLine();
     }
 
@@ -92,25 +91,24 @@ public partial class ConfigWindow
         _timerWindow.ResetCache(typeof(TimerWindow.TaskCache));
     }
 
-    // 6.3
-    //private void DrawTribeAllowancesFinishedInput()
-    //{
-    //    var tribeAllowances = Accountant.Config.TribesFinished;
-    //    ImGui.SetNextItemWidth(150 * ImGuiHelpers.GlobalScale);
-    //    if (!ImGui.DragInt("Tribe Quests Finished", ref tribeAllowances, 1, 0, Tribe.AllowanceCap))
-    //        return;
+    private void DrawTribeAllowancesFinishedInput()
+    {
+        var tribeAllowances = Accountant.Config.TribesFinished;
+        ImGui.SetNextItemWidth(150 * ImGuiHelpers.GlobalScale);
+        if (!ImGui.DragInt("Tribe Quests Finished", ref tribeAllowances, 1, 0, Tribe.AllowanceCap))
+            return;
 
-    //    if (tribeAllowances < 0)
-    //        tribeAllowances = 0;
-    //    if (tribeAllowances > Tribe.AllowanceCap)
-    //        tribeAllowances = Tribe.AllowanceCap;
-    //    if (tribeAllowances == Accountant.Config.TribesFinished)
-    //        return;
+        if (tribeAllowances < 0)
+            tribeAllowances = 0;
+        if (tribeAllowances > Tribe.AllowanceCap)
+            tribeAllowances = Tribe.AllowanceCap;
+        if (tribeAllowances == Accountant.Config.TribesFinished)
+            return;
 
-    //    Accountant.Config.TribesFinished = tribeAllowances;
-    //    Accountant.Config.Save();
-    //    _timerWindow.ResetCache(typeof(TimerWindow.TaskCache));
-    //}
+        Accountant.Config.TribesFinished = tribeAllowances;
+        Accountant.Config.Save();
+        _timerWindow.ResetCache(typeof(TimerWindow.TaskCache));
+    }
 
     private void OrderByCrop(bool toggle)
     {
@@ -161,12 +159,11 @@ public partial class ConfigWindow
     private void EnableJumboCactpot(bool toggle)
         => EnableCache(toggle, ConfigFlags.JumboCactpot, typeof(TimerWindow.TaskCache));
 
-    // 6.3
-    //private void EnableDeliveries(bool toggle)
-    //    => EnableCache(toggle, ConfigFlags.CustomDelivery, typeof(TimerWindow.TaskCache));
+    private void EnableDeliveries(bool toggle)
+        => EnableCache(toggle, ConfigFlags.CustomDelivery, typeof(TimerWindow.TaskCache));
 
-    //private void EnableTribes(bool toggle)
-    //    => EnableCache(toggle, ConfigFlags.Tribes, typeof(TimerWindow.TaskCache));
+    private void EnableTribes(bool toggle)
+        => EnableCache(toggle, ConfigFlags.Tribes, typeof(TimerWindow.TaskCache));
 
     private void EnableTimers(bool toggle)
         => EnableCache(toggle, ConfigFlags.Enabled, typeof(TimerWindow.BaseCache));

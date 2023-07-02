@@ -29,9 +29,8 @@ public enum ConfigFlags : uint
     MiniCactpot        = 0x008000,
     JumboCactpot       = 0x010000,
     NoHeaderStyling    = 0x020000,
-    // 6.3
-    //CustomDelivery     = 0x040000,
-    //Tribes             = 0x080000,
+    CustomDelivery     = 0x040000,
+    Tribes             = 0x080000,
 }
 
 public static class ConfigFlagExtensions
@@ -75,10 +74,9 @@ public class AccountantConfiguration : IPluginConfiguration
       | ConfigFlags.MapAllowance
       | ConfigFlags.MiniCactpot
       | ConfigFlags.JumboCactpot
-      | ConfigFlags.LeveAllowances;
-        // 6.3
-      //| ConfigFlags.CustomDelivery
-      //| ConfigFlags.Tribes;
+      | ConfigFlags.LeveAllowances
+      | ConfigFlags.CustomDelivery
+      | ConfigFlags.Tribes;
 
     public int Version { get; set; } = 4;
 
@@ -193,18 +191,17 @@ public class AccountantConfiguration : IPluginConfiguration
         set => Flags.Set(ConfigFlags.NoHeaderStyling, value);
     }
 
-    // 6.3
-    //public bool EnableDeliveries
-    //{
-    //    get => Flags.Check(ConfigFlags.CustomDelivery);
-    //    set => Flags.Set(ConfigFlags.CustomDelivery, value);
-    //}
+    public bool EnableDeliveries
+    {
+        get => Flags.Check(ConfigFlags.CustomDelivery);
+        set => Flags.Set(ConfigFlags.CustomDelivery, value);
+    }
 
-    //public bool EnableTribes
-    //{
-    //    get => Flags.Check(ConfigFlags.Tribes);
-    //    set => Flags.Set(ConfigFlags.Tribes, value);
-    //}
+    public bool EnableTribes
+    {
+        get => Flags.Check(ConfigFlags.Tribes);
+        set => Flags.Set(ConfigFlags.Tribes, value);
+    }
 
     public int LeveWarning    { get; set; } = 85;
     public int TribesFinished { get; set; } = 0;
